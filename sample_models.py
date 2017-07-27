@@ -122,8 +122,7 @@ def bidirectional_rnn_model(input_dim, units, output_dim=29):
     # Main acoustic input
     input_data = Input(name='the_input', shape=(None, input_dim))
     # TODO: Add bidirectional recurrent layer
-    bidir_rnn = Bidirectional(GRU(output_dim, return_sequences=True, 
-                 implementation=2, name='rnn')(input_data))
+    bidir_rnn = Bidirectional(input_data)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(
         output_dim))(bidir_rnn)
