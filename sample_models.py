@@ -125,7 +125,7 @@ def bidirectional_rnn_model(input_dim, units, output_dim=29):
     simp_rnn = GRU(output_dim, return_sequences=True, 
                  implementation=2, name='rnn')(input_data)
 
-    bidir_rnn = Bidirectional(simp_rnn)
+    bidir_rnn = Bidirectional()(simp_rnn)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(
         output_dim))(bidir_rnn)
