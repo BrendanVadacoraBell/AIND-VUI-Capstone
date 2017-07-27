@@ -103,7 +103,7 @@ def deep_rnn_model(input_dim, units, recur_layers, output_dim=29):
     for i in range(recur_layers):
         output = GRU(output_dim,
         return_sequences=True, implementation=2, name='rnn_{}'.format(i + 1))(input_data)
-        bn_layer = BatchNormalization(name='bn_rnn_{}'.format(r + 1))
+        bn_layer = BatchNormalization(name='bn_rnn_{}'.format(i + 1))
         output = bn_layer(output)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(
