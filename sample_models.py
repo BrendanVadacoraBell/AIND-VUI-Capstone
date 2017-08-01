@@ -157,8 +157,9 @@ def final_model(input_dim, filters, kernel_size, conv_stride,
     # TODO: Add batch normalization
     bn_rnn = BatchNormalization()(simp_rnn)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
+    dropout_bn = Dropout(0.2)(conv_1d)
     time_dense = TimeDistributed(Dense(
-        output_dim))(bn_rnn)
+        output_dim))(dropout_bn)
     # Add softmax activation layer
     y_pred = Activation('softmax', name='softmax')(time_dense)
     # Specify the model
