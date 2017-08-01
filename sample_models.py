@@ -148,13 +148,14 @@ def final_model(input_dim, filters, kernel_size, conv_stride,
                      padding=conv_border_mode,
                      activation='relu',
                      name='conv1d')(input_data)
-    dropout = Dropout(0.2)(conv_1d)
+    # Add batch normalization
+    bn_cnn = BatchNormalization(name='bn_conv_1d')(conv_1d)
+    dropout = Dropout(0.2)(bn_cnn)
     # Add a recurrent layer
-    simp_rnn = SimpleRNN(units, activation='relu',
+    simp_rnn = GRU(units, activation='relu',
         return_sequences=True, implementation=2, name='rnn')(dropout)
     # TODO: Add batch normalization
-    dropout_bn = Dropout(0.2)(simp_rnn)
-    bn_rnn = BatchNormalization()(dropout_bn)
+    bn_rnn = BatchNormalization()(simp_rnn)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(
         output_dim))(bn_rnn)
