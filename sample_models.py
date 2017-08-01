@@ -156,9 +156,12 @@ def final_model(input_dim, filters, kernel_size, conv_stride,
         return_sequences=True, implementation=2, name='rnn')(dropout)
     # TODO: Add batch normalization
     bn_rnn = BatchNormalization()(simp_rnn)
+    dropout_bn = Dropout(0.2)(bn_rnn)
+    simp_rnn_2 = GRU(units, activation='relu',
+        return_sequences=True, implementation=2, name='rnn_2')(dropout_bn)
     # TODO: Add a TimeDistributed(Dense(output_dim)) layer
     time_dense = TimeDistributed(Dense(
-        output_dim))(bn_rnn)
+        output_dim))(simp_rnn_2)
     # Add softmax activation layer
     y_pred = Activation('softmax', name='softmax')(time_dense)
     # Specify the model
